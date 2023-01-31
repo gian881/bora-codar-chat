@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { MessageSender } from "./components/MessageSender";
 import foto from "./assets/foto.png";
 import { timeAgo } from "./utils/time";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface Mensagem {
   quemEnviou: "eu" | "outro";
@@ -16,6 +17,9 @@ interface Mensagem {
 export function App() {
   const [mensagem, setMensagem] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const [animationParent] = useAutoAnimate();
+
   const [mensagens, setMensagens] = useState<Mensagem[]>([
     {
       quemEnviou: "outro",
@@ -67,7 +71,10 @@ export function App() {
   return (
     <div className="flex h-full max-w-7xl flex-1 flex-col gap-8 px-8 py-6 sm:px-16 sm:py-8 md:px-20 md:py-9">
       <Header nome="Gian" foto={foto} online />
-      <main className="relative flex flex-1 flex-col gap-8 overflow-y-auto px-0.5 pt-6 sm:px-1">
+      <main
+        ref={animationParent}
+        className="relative flex flex-1 flex-col gap-8 overflow-y-auto px-0.5 pt-6 sm:px-1"
+      >
         <p className="absolute top-1 left-0 right-0 mx-auto w-fit rounded-xl bg-[#2d2a3c] py-1 px-2 text-center text-xs text-[#E1E1E6] ">
           {timeAgo(new Date("2023-01-26T14:30:00.948Z"))}
         </p>
